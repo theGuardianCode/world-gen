@@ -1,16 +1,24 @@
-import tkinter as tk
+import pygame
 from map_maker import *
+pygame.init()
 
-window = tk.Tk()
-canvas = tk.Canvas(width=500, height=500)
-window.title("Procedural World Gen")
-window.geometry("500x500")
+window = pygame.display.set_mode((500, 500))
+pygame.display.set_caption("3d Procedural Generation")
 
 def new_world():
     noise_map = grid_map()
-    create_terrain(noise_map, canvas)
-
-button = tk.Button(window, text="New World", command=new_world)
-button.pack()
-
-window.mainloop()
+    create_terrain(noise_map, window)
+    
+def main():
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                new_world()
+                
+    
+    pygame.quit()
+    
+main()
